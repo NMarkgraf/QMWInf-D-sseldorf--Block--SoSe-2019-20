@@ -20,3 +20,45 @@ Zu Beginn einer jeden Veranstaltung wollen das Paket "moasic" laden:
 library(mosaic)
 ```
 
+Wir wollen die ersten Schritte auf einem Testdatensatz gehen. Dazu müssen wir ihn laden:
+
+```{r}
+data("Births78")
+```
+
+
+Werfen wir also einen Blick in die Tabelle, in dem wir die ersten Einträge betrachten:
+
+```{r}
+head(Births78)
+```
+
+Wir wollen die Daten "visulaisieren" in dem wir ein Streudiagramm erzeugen:
+
+```{r}
+gf_point(births ~ date, data = Births78)
+```
+
+
+Wir können einen Blick in die Daten werfen mit dem Befehl "inspect()":
+
+```{r}
+inspect(Births78)
+```
+
+Wir wollen die Punkte nach dem Wochentag einfärben:
+
+```{r}
+gf_point(births ~ date, 
+         color = ~ wday,
+         data = Births78)
+```
+
+
+
+
+
+
+
+
+
