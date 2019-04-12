@@ -12,7 +12,7 @@ library(mosaic)
 
 ```
 
-## Vorlesung vom 11.04.2019
+## Vorlesung vom 12.04.2019
 
 Zu Beginn einer jeden Veranstaltung wollen das Paket "moasic" laden:
 
@@ -53,6 +53,71 @@ gf_point(births ~ date,
          color = ~ wday,
          data = Births78)
 ```
+
+
+Wie viele Kinder wurden am amerikanischen Unabhängigkeitstag (4. Juli) im Jahr 1978 geboren?
+
+```{r}
+Births78 %>% 
+  filter( date == "1978-07-04" )
+```
+
+
+Wenn mich nur die Spalte der Geburten interessiert, dann kann ich diese Spalte selektieren:
+
+```{r}
+Births78 %>% 
+  filter( date == "1978-07-04" ) %>%
+  select( births )
+```
+
+Übung 11:
+
+```{r}
+Births78 %>% 
+  filter( date == "1978-06-16" ) %>%
+  select( births )
+
+```
+
+
+Wie hoch ist die durchschnittliche Geburtenrate im 1978 in den USA?
+
+```{r}
+mean( births ~ 1, data=Births78)
+```
+
+Alternativ:
+
+```{r}
+mean( ~ births, data=Births78)
+```
+
+
+Wie verhält sich der Mittelwert für die einzelnen Wochentage?
+
+```{r}
+mean( births ~ wday, data=Births78)
+```
+
+
+Übung 12:
+
+Wie verhält es sich mit der Anzahl der Geburten je Monat?
+
+```{r}
+mean( births ~ month, data=Births78)
+```
+
+
+Wir wollen ein Blick auf die Struktur der Daten werfen:
+
+```{r}
+str(Births78)
+```
+
+
+
 
 
 
