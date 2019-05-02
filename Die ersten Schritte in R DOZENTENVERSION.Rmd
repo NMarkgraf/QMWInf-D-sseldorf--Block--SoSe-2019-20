@@ -119,11 +119,79 @@ str(Births78)
 
 
 
+## Vorlesung vom 26.4.2019
+
+
+Wir laden Mosaic und die tipping Daten:
+
+```{r}
+library(mosaic)
+download.file("https://goo.gl/whKjnl", destfile="tips.csv")
+tips <- read.csv2("tips.csv")
+```
+
+```{r}
+str(tips)
+```
 
 
 
+## Übung 34:
+
+```{r}
+tally( ~ smoker | day, format = "proportion", data=tips)
+tally( ~  day | smoker, format = "proportion", data=tips)
+```
+
+## Vorlesung vom 02.05.2019
 
 
+## Offene Übung 60
+
+Wir bereiten die Daten vor (mosaic und tipping!)
+
+```{r}
+library(mosaic)
+tips <- read.csv2("tips.csv")
+```
+
+Nun der Blick auf das Histogramm:
+```{r}
+gf_histogram( ~ total_bill | smoker, data=tips)
+```
+
+Der Boxplot:
+
+```{r}
+gf_boxplot( ~ total_bill | smoker, data=tips)
+```
+
+Die Kennzahlen:
+
+```{r}
+favstats( ~ total_bill | smoker, data=tips)
+```
+
+Es fehlt noch der Interquantilsabstand:
+
+```{r}
+iqr( ~ total_bill | smoker, data=tips)
+```
+
+
+
+## Der simuliterte Münzwurf
+
+
+```{r}
+library(mosaic)
+# 
+set.seed(2009)
+muenzverteilung <- do(100) * rflip(n=10)
+
+gf_bar( ~ heads, data= muenzverteilung)
+
+```
 
 
 
