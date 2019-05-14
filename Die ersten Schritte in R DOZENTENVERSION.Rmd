@@ -193,5 +193,137 @@ gf_bar( ~ heads, data= muenzverteilung)
 
 ```
 
+Beachten Sie den anderen Startwert (`set.seed()`) des Pseudozufallszahlengenerators und die Auswirkungen auf das Säulendiagramm:
+
+```{r}
+set.seed(123456)
+muenzverteilung <- do(100) * rflip(n=10)
+
+gf_bar( ~ heads, data= muenzverteilung) %>%
+  gf_lims(x=c(0, 10)) %>%
+  gf_refine(scale_x_continuous(breaks = scales::pretty_breaks(n = 10)))
+  
+
+```
+
+Nun haben wir die Anzahl der Wiederholungne (`do(.)`) erhöht:
+```{r}
+set.seed(5151515)
+muenzverteilung <- do(10000) * rflip(n=10)
+
+```
+```{r}
+gf_bar( ~ heads, data= muenzverteilung) %>%
+  gf_refine(scale_x_continuous(breaks = scales::pretty_breaks(n = 10)))
+```
+
+
+## Vorlesung vom 9.5.2019
+
+Wir bereiten die Daten vor (mosaic und tipping!)
+
+```{r}
+library(mosaic)
+tips <- read.csv2("tips.csv")
+```
+
+```{r}
+gf_violin(total_bill ~ smoker, draw_quantiles=c(0.25,0.50,0.75), data=tips)#
+
+```
+
+
+```{r}
+set.seed(2009)
+Nullvtlg <- do(10000) * 
+  diffmean(total_bill ~ shuffle(smoker), data=tips)
+```
+
+
+```{r}
+gf_histogram( ~ diffmean, data=Nullvtlg) %>%
+  gf_vline(xintercept = diffmean(total_bill ~ smoker, data=tips))
+```
+
+
+
+```{r}
+t.test( total_bill ~ smoker, data=tips)
+```
+
+```{r}
+t.test( total_bill ~ smoker, var.equal=TRUE, data=tips)
+```
+
+##
+
+
+
+
+```{r}
+prop( sex ~ time, success = "Female", data=tips)
+diff.stipro <- diffprop( sex ~ time, success = "Female", data=tips)
+diff.stipro
+```
+
+```{r}
+#set.seed(636561836)
+Nullvtlg <- do(10000) *
+  diffprop(sex ~ shuffle(time), success = "Female", data=tips)
+```
+
+```{r}
+gf_histogram( ~ diffprop, data=Nullvtlg) %>%
+  gf_vline(xintercept = diff.stipro)
+```
+
+Berechnen wir nun den p-Wert:
+```{r}
+prop( ~ abs(diffprop) >= abs(diff.stipro), data=Nullvtlg)
+```
+
+##
+
+```{r}
+gf_violin(tip ~ day, data=tips)
+```
+
+
+## Vorlesung vom 13.05.2019
+```{r}
+library(mosaic)
+tips <- read.csv2("tips.csv")
+```
+
+### Lineare Regresson
+
+```{r}
+gf_point(tip ~ total_bill, data=tips)
+```
+
+```{r}
+cor(tip ~ total_bill, data=tips)
+```
+
+
+Ein lineares Modell:
+```{r}
+erglm1 <- lm(tip ~ total_bill, data=tips)
+erglm1
+```
+
+
+
+```{r}
+plotModel(erglm1)
+```
+
+
+```{r}
+summary(erglm1)
+```
+
+
+
 
 
